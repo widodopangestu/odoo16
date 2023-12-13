@@ -1,13 +1,12 @@
-version: '3.1'
+version: "3.7"
 services:
   odoo:
     image: odoo:16.0
-    env_file: myenvfile.env
     depends_on:
       - psql
     ports:
-      - "8069:8069" #port modoo16ing(custom-port:8069)
-      - "8072:8072" #port modoo16ing(custom-port:8069)
+      - "8069:8069"
+      - "8072:8072"
     volumes:
       - ./data/odoo:/var/lib/odoo
       - ./config:/etc/odoo
@@ -17,7 +16,11 @@ services:
       - odoo16-network
   psql:
     image: postgres:13
-    env_file: myenvfile.env
+    environment:
+      POSTGRES_DB: postgres 
+      POSTGRES_PASSWORD: odoo16 
+      POSTGRES_USER: odoo16 
+      PGDATA: /var/lib/pgsql/data/pgdata 
     volumes:
       - ./data/pgsql:/var/lib/pgsql/data/pgdata
     networks:
