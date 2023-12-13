@@ -6,16 +6,22 @@ services:
     depends_on:
       - psql
     ports:
-      - "8069:8069" #port mapping(custom-port:8069)
+      - "8069:8069" #port modoo16ing(custom-port:8069)
+      - "8072:8072" #port modoo16ing(custom-port:8069)
     volumes:
       - ./data/odoo:/var/lib/odoo
       - ./config:/etc/odoo
       - ./custom-addons:/mnt/extra-addons
       - ./logs:/var/log/odoo
+    networks:
+      - odoo16-network
   psql:
     image: postgres:13
     env_file: myenvfile.env
-    ports:
-      - "54321:5432"
     volumes:
-      - ./data/odoo:/var/lib/pgsql/data/pgdata
+      - ./data/pgsql:/var/lib/pgsql/data/pgdata
+    networks:
+      - odoo16-network
+networks:
+  odoo16-network:
+    driver: bridge
