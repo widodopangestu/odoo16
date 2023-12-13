@@ -8,15 +8,14 @@ services:
     ports:
       - "8069:8069" #port mapping(custom-port:8069)
     volumes:
-      - data:/var/lib/odoo
+      - ./data/odoo:/var/lib/odoo
       - ./config:/etc/odoo
       - ./custom-addons:/mnt/extra-addons
       - ./logs:/var/log/odoo
   psql:
     image: postgres:13
     env_file: myenvfile.env
+    ports:
+      - "54321:5432"
     volumes:
-      - db:/var/lib/pgsql/data/pgdata
-volumes:
-  data:
-  db:
+      - ./data/odoo:/var/lib/pgsql/data/pgdata
